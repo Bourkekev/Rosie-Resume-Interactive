@@ -1,7 +1,3 @@
-# Code Institute
+# UCD Resume Project
 
-Welcome USER_NAME,
-
-We have preinstalled all of the tools you need to get started.
-
-Happy coding!
+A CV website using Bootstrap
