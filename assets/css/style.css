@@ -242,3 +242,26 @@ footer {
     position: relative;
     width: 60%;
 }
+/* ----------------------------------------Skills Progress bar */
+
+.progress+.progress {
+    margin-top: 1rem;
+}
+.progress {
+    position: relative;
+    height: 25px;
+    margin-bottom: 4px;
+}
+
+.progress-type {
+    position: absolute;
+    left: 0px;
+    font-weight: 400;
+    padding: 4px 30px 4px 10px;
+    color: #fafafa;
+    background-color: rgba(25, 25, 25, 0.3);
+}
+
+.progress-section {
+    margin: 40px 20px;
+}
