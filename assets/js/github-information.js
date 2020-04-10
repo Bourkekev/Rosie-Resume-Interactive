@@ -15,7 +15,7 @@ function fetchGitHubInformation(event) {
     );
 
     $.when(
-        $.getJSON(`https://api.github.com/users/${username}`);
+        $.getJSON(`https://api.github.com/users/${username}`)
     ).then(
         function(reponse){
             let userData = response;
