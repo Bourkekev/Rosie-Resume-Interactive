@@ -1,3 +1,20 @@
+function userInformationHTML(user){
+    return `<h2>${user.name}
+        <span class="small-name">
+            (@<a href="${user.html_url}" target="_blank">${user.login}</a>
+        </span>
+        </h2>
+        <div class="gh-content">
+            <div class="gh-avatar">
+                <a href="${user.html_url}" target="_blank">
+                    <img src="${user.avatar_url}" alt="${user.login}" width="80" height="80" />
+                </a>
+            </div>
+            <p>Followers: ${user.followers} - Following: ${user.following}<br>
+                Repos: ${user.public_repos}</p>
+        </div>`
+}
+
 function fetchGitHubInformation(event) {
     let username = $("#gh-username").val();
 
@@ -17,7 +34,7 @@ function fetchGitHubInformation(event) {
     $.when(
         $.getJSON(`https://api.github.com/users/${username}`)
     ).then(
-        function(reponse){
+        function(response){
             let userData = response;
             //send userData into userInformationHTML function
             $("gh-user-data").html(userInformationHTML(userData));
