@@ -32,7 +32,7 @@ function fetchGitHubInformation(event) {
     );
 
     $.when(
-        $.getJSON(`https://api.github.com/users/${username}`)
+        $.getJSON(`https://cors-anywhere.herokuapp.com/https://api.github.com/users/${username}`)
     ).then(
         function(response){
             let userData = response;
