@@ -37,6 +37,10 @@ function repoInformationHTML(repos){
 }
 
 function fetchGitHubInformation(event) {
+    //empty divs so won't show last user in field
+    $("#gh-user-data").html("");
+    $("#gh-repo-data").html("");
+    
     let username = $("#gh-username").val();
 
     if(!username) {
@@ -78,3 +82,5 @@ function fetchGitHubInformation(event) {
         }
     );
 }
+//run when page loads so not blank
+$(document).ready(fetchGitHubInformation);
