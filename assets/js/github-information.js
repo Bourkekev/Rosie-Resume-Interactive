@@ -1,18 +1,39 @@
 function userInformationHTML(user){
-    return `<h2>${user.name}
-        <span class="small-name">
-            (@<a href="${user.html_url}" target="_blank">${user.login}</a>)
-        </span>
+    return `
+        <h2>${user.name}
+            <span class="small-name">
+                (@<a href="${user.html_url}" target="_blank">${user.login}</a>)
+            </span>
         </h2>
         <div class="gh-content">
             <div class="gh-avatar">
                 <a href="${user.html_url}" target="_blank">
-                    <img src="${user.avatar_url}" alt="${user.login}" width="80" height="80" />
+                    <img src="${user.avatar_url}" width="80" height="80" alt="${user.login}" />
                 </a>
             </div>
             <p>Followers: ${user.followers} - Following: ${user.following}<br>
                 Repos: ${user.public_repos}</p>
         </div>`
+}
+function repoInformationHTML(repos){
+    if (repos.length == 0) {
+        return `<div class="clearfix repo-list">No repos!</div>`;
+    }
+    
+    //map function is like a foreach, so for each item in array
+    let listItemsHTML = repos.map(function(repo){
+        return `<li>
+                    <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                </li>`;
+    });
+    return `<div class="clearfix repo-list">
+                <p>
+                    <strong>Repo List:</strong>
+                </p>
+                <ul>
+                    ${listItemsHTML.join("\n")}
+                </ul>
+            </div>`;
 }
 
 function fetchGitHubInformation(event) {
@@ -27,25 +48,30 @@ function fetchGitHubInformation(event) {
     // animated loader
     $("#gh-user-data").html(
         `<div id="loader">
-            <img src="assets/css/loader.gif" alt="animated loading indicator" />
-        </div>`
-    );
+            <img src="assets/css/loader.gif" alt="loading..." />
+        </div>`);
 
     $.when(
-        $.getJSON(`https://cors-anywhere.herokuapp.com/https://api.github.com/users/${username}`)
+        $.getJSON(`https://cors-anywhere.herokuapp.com/https://api.github.com/users/${username}`),
+        $.getJSON(`https://cors-anywhere.herokuapp.com/https://api.github.com/users/${username}/repos`)
     ).then(
-        function(response){
-            let userData = response;
+        function(firstResponse, secondResponse){
+            let userData = firstResponse[0];
+            let repoData =  secondResponse[0];
+
             //send userData into userInformationHTML function
-            $("gh-user-data").html(userInformationHTML(userData));
+            $("#gh-user-data").html(userInformationHTML(userData));
+            //send repoData into userInformationHTML function
+            $("#gh-repo-data").html(repoInformationHTML(repoData));
+
         }, function(errorResponse){
             if(errorResponse.status === 404){
-                $("gh-user-data").html(
+                $("#gh-user-data").html(
                     `<h2>No info found for user ${username}</h2>`
                 );
             } else {
                 console.log(errorResponse);
-                $("gh-user-data").html(
+                $("#gh-user-data").html(
                     `<h2>Error: ${errorResponse.responseJSON.message}</h2>`
                 );
             }
