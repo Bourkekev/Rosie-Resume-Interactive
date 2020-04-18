@@ -132,5 +132,25 @@
             </div>
         </div>
     </footer>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("user_upu5oN7qoaZd5LQpk8rYy");
+            var templateParams = {
+                name: 'Kevin',
+                notes: 'The project that I want is...'
+            };
+            
+            emailjs.send('gmail', 'rosie', templateParams)
+                .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                }, function(error) {
+                console.log('FAILED...', error);
+                });
+
+        })();
+    </script>
 </body>
 </html>
